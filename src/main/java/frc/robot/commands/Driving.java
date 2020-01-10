@@ -7,6 +7,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
@@ -16,6 +19,12 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class Driving extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  
+  NetworkTableInstance inst;
+  NetworkTable table;
+  NetworkTableEntry move;
+  
+
   private final Drivetrain driveTrain;
 
   /**
@@ -28,21 +37,30 @@ public class Driving extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
+    inst = NetworkTableInstance.getDefault();
+    inst.startClient("10.25.26.157", 1735);
+    inst.startClientTeam(2526);
+    table = inst.getTable("Vision");
+    move = table.getEntry("Move");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (move.getBoolean(false) == true) {
+      driveTrain.vision();
+    }
     driveTrain.Driving(RobotContainer.getLeft(), RobotContainer.getRight());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    inst.stopClient();
   }
 
   // Returns true when the command should end.

@@ -37,9 +37,6 @@ public class RobotContainer {
   public static Joystick leftDriver = new Joystick(0);
   public static Joystick rightDriver = new Joystick(1);
 
-  
-  NetworkTable vision = NetworkTable.getHierarchy(key)
-
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

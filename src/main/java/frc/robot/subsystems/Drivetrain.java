@@ -10,6 +10,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -45,17 +48,23 @@ public class Drivetrain extends SubsystemBase {
     FL.setInverted(false);
     FR.setInverted(false);
     BL.setInverted(false);
-    BR.setInverted(true);
+    BR.setInverted(false);
 
     leftMotors = new SpeedControllerGroup(FL, BL);
     rightMotors = new SpeedControllerGroup(FR, BR);
 
     drive = new DifferentialDrive(leftMotors, rightMotors);
-    
+
   }
 
   public void Driving(Joystick leftDriver, Joystick rightDriver) {
-    drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
+
+     drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
+
+  }
+
+  public void vision() {
+     drive.arcadeDrive(0.3, 0.3);
   }
 
   @Override
