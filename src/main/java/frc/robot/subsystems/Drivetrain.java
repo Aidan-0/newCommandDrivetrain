@@ -27,33 +27,38 @@ public class Drivetrain extends SubsystemBase {
  * @param fRId
    */
 
-  CANSparkMax FL;
-  CANSparkMax FR;
-  CANSparkMax BL;
-  CANSparkMax BR;
+  CANSparkMax fL;
+  CANSparkMax fR;
+  CANSparkMax bL;
+  CANSparkMax bR;
 
   SpeedControllerGroup leftMotors;
   SpeedControllerGroup rightMotors;
 
   DifferentialDrive drive;
+  double deadZone;
+  double slowZone;
 
+  public Drivetrain(int fLId, int fRId, int bLId, int bRId) {
 
-  public Drivetrain(int FLId, int FRId, int BLId, int BRId) {
+    fL = new CANSparkMax(fLId, MotorType.kBrushless);
+    fR = new CANSparkMax(fRId, MotorType.kBrushless);
+    bL = new CANSparkMax(bLId, MotorType.kBrushless);
+    bR = new CANSparkMax(bRId, MotorType.kBrushless);
 
-    FL = new CANSparkMax(FLId, MotorType.kBrushless);
-    FR = new CANSparkMax(FRId, MotorType.kBrushless);
-    BL = new CANSparkMax(BLId, MotorType.kBrushless);
-    BR = new CANSparkMax(BRId, MotorType.kBrushless);
+    fL.setInverted(false);
+    fR.setInverted(true);
+    bL.setInverted(false);
+    bR.setInverted(true);
 
-    FL.setInverted(false);
-    FR.setInverted(false);
-    BL.setInverted(false);
-    BR.setInverted(false);
+    leftMotors = new SpeedControllerGroup(fL, bL);
+    rightMotors = new SpeedControllerGroup(fR, bR);
 
-    leftMotors = new SpeedControllerGroup(FL, BL);
-    rightMotors = new SpeedControllerGroup(FR, BR);
 
     drive = new DifferentialDrive(leftMotors, rightMotors);
+
+    deadZone = 0.2;
+    slowZone = 0.6;
 
   }
 
@@ -61,6 +66,49 @@ public class Drivetrain extends SubsystemBase {
 
      drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
 
+     /*
+    if (leftDriver.getY() < -deadZone || leftDriver.getY() > deadZone) {
+      if (leftDriver.getY() < -slowZone || leftDriver.getY() > slowZone) {
+        rightMotors.set(leftDriver.getY()/4);
+      }
+      else {
+        rightMotors.set(leftDriver.getY()/2);
+      }
+    }
+    if (rightDriver.getY() < -deadZone || rightDriver.getY() > deadZone) {
+      if (rightDriver.getY() < -slowZone || rightDriver.getY() > slowZone) {
+        leftMotors.set(-rightDriver.getY()/4);
+      }
+      else {
+        leftMotors.set(-rightDriver.getY()/2);
+      }
+    }
+     /*
+     if (leftDriver.getY() < -deadZone || leftDriver.getY() > deadZone) {
+       if (leftDriver.getY() < -slowZone || leftDriver.getY() > slowZone) {
+        leftMotors.set(leftDriver.getY()/2);
+        rightMotors.set(leftDriver.getY()/2);
+       }
+       else {
+        leftMotors.set(leftDriver.getY());
+        rightMotors.set(leftDriver.getY());
+       }
+      }
+     if (rightDriver.getX() < -deadZone || rightDriver.getX() > deadZone) {
+      if (rightDriver.getX() < -slowZone || rightDriver.getX() > slowZone) {
+        leftMotors.set(rightDriver.getX()/2);
+        rightMotors.set(rightDriver.getX()/2);
+      }
+      else {
+        leftMotors.set(rightDriver.getX());
+       rightMotors.set(rightDriver.getX());
+      }
+     }
+     else {
+      leftMotors.set(0);
+      rightMotors.set(0);
+     }
+     */
   }
 
   public void vision() {
