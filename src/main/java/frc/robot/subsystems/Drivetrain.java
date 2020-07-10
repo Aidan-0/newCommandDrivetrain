@@ -7,8 +7,7 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -25,29 +24,25 @@ public class Drivetrain extends SubsystemBase {
    * @param fRId
    */
 
-  CANSparkMax fL;
-  CANSparkMax fR;
-  CANSparkMax bL;
-  CANSparkMax bR;
+  WPI_TalonSRX fL;
+  WPI_TalonSRX fR;
+  WPI_TalonSRX bL;
+  WPI_TalonSRX bR;
 
   SpeedControllerGroup leftMotors;
   SpeedControllerGroup rightMotors;
 
   DifferentialDrive drive;
+  
   double deadZone;
   double slowZone;
 
   public Drivetrain(int fLId, int fRId, int bLId, int bRId) {
 
-    fL = new CANSparkMax(fLId, MotorType.kBrushless);
-    fR = new CANSparkMax(fRId, MotorType.kBrushless);
-    bL = new CANSparkMax(bLId, MotorType.kBrushless);
-    bR = new CANSparkMax(bRId, MotorType.kBrushless);
-
-    fL.setInverted(false);
-    fR.setInverted(true);
-    bL.setInverted(false);
-    bR.setInverted(true);
+    fL = new WPI_TalonSRX(fLId);
+    fR = new WPI_TalonSRX(fRId);
+    bL = new WPI_TalonSRX(bLId);
+    bR = new WPI_TalonSRX(bRId);
 
     leftMotors = new SpeedControllerGroup(fL, bL);
     rightMotors = new SpeedControllerGroup(fR, bR);
@@ -60,26 +55,10 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void Driving(Joystick leftDriver, Joystick rightDriver) {
-    // drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
-
-    if (rightDriver.getY() > deadZone || rightDriver.getY() < -deadZone) 
-      rightMotors.set(-rightDriver.getY());
-      
-    else {
-      rightMotors.set(0);
-    }
-    if (leftDriver.getY() > deadZone || leftDriver.getY() < -deadZone) 
-      leftMotors.set(-leftDriver.getY());
-
-    else {
-      leftMotors.set(0);
-    }
+    drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
 
   }
 
-  public void vision() {
-    drive.arcadeDrive(0.3, 0.3);
-  }
 
   @Override
   public void periodic() {
