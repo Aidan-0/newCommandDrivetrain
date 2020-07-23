@@ -17,9 +17,9 @@ package frc.robot;
  */
 public final class Constants {
     //All of these are placeholders for now
-    public static int fRId = 54;
-    public static int fLId = 55;
-    public static int bRId = 52;
-    public static int bLId = 53;
+    public static int fRId = 0;
+    public static int fLId = 3;
+    public static int bRId = 1;
+    public static int bLId = 2;
     
 }

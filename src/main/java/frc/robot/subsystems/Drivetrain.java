@@ -33,9 +33,6 @@ public class Drivetrain extends SubsystemBase {
   SpeedControllerGroup rightMotors;
 
   DifferentialDrive drive;
-  
-  double deadZone;
-  double slowZone;
 
   public Drivetrain(int fLId, int fRId, int bLId, int bRId) {
 
@@ -44,19 +41,20 @@ public class Drivetrain extends SubsystemBase {
     bL = new WPI_TalonSRX(bLId);
     bR = new WPI_TalonSRX(bRId);
 
+    fL.setInverted(true);
+    bL.setInverted(true);
+    bR.setInverted(true);
+
     leftMotors = new SpeedControllerGroup(fL, bL);
     rightMotors = new SpeedControllerGroup(fR, bR);
 
     drive = new DifferentialDrive(leftMotors, rightMotors);
 
-    deadZone = 0.1;
-    slowZone = 0.6;
-
   }
 
   public void Driving(Joystick leftDriver, Joystick rightDriver) {
-    drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
-
+    drive.arcadeDrive(leftDriver.getY(), -rightDriver.getX());
+ 
   }
 
 
