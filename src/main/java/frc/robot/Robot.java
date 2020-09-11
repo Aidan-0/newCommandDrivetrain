@@ -7,6 +7,11 @@
 
 package frc.robot;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,7 +27,6 @@ public class Robot extends TimedRobot {
   public static final String RobotContainer = null;
 
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
 
 
