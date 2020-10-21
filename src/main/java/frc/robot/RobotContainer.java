@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.UpdateVision;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.VisionBrain;
 
 
 
@@ -27,10 +29,11 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Drivetrain driveTrain = new Drivetrain(Constants.fLId, Constants.fRId, Constants.bLId, Constants.bRId);
+  private final VisionBrain m_visionBrain = new VisionBrain();
+  //private final Drivetrain driveTrain = new Drivetrain(Constants.fLId, Constants.fRId, Constants.bLId, Constants.bRId);
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final Driving driving = new Driving(driveTrain);
+  //private final Driving driving = new Driving(driveTrain);
 
   public static Joystick leftDriver = new Joystick(0);
   public static Joystick rightDriver = new Joystick(1);
@@ -41,7 +44,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    driveTrain.setDefaultCommand(driving);
+    //driveTrain.setDefaultCommand(driving);
+    m_visionBrain.setDefaultCommand(new UpdateVision(m_visionBrain));
     configureButtonBindings();
   }
 
@@ -74,7 +78,9 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
+  /*
   public Command getDriving(){
     return driving;
   }
+  */
 }

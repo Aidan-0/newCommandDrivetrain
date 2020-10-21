@@ -61,15 +61,16 @@ public class Drivetrain extends SubsystemBase {
 
   public void Driving(Joystick leftDriver, Joystick rightDriver) {
     // drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
+    double modifier = 0.5;
 
-    if (rightDriver.getY() > deadZone || rightDriver.getY() < -deadZone) 
-      rightMotors.set(-rightDriver.getY());
-      
-    else {
+    if (rightDriver.getY() > deadZone || rightDriver.getY() < -deadZone) {
+      fR.set(-rightDriver.getY() * modifier);
+      bR.set(-rightDriver.getY());
+    } else {
       rightMotors.set(0);
     }
     if (leftDriver.getY() > deadZone || leftDriver.getY() < -deadZone) 
-      leftMotors.set(-leftDriver.getY());
+      leftMotors.set(-leftDriver.getY() * modifier);
 
     else {
       leftMotors.set(0);
