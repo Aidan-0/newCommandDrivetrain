@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   public static final String RobotContainer = null;
 
   private Command m_autonomousCommand;
-  private RobotContainer m_robotContainer;
+  private RobotContainer m_robotContainer = new RobotContainer();
 
 
   /**
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    System.out.println("Hey guys, vision brain has been created");
+    System.out.println("Robot initialized");
   }
 
   /**
@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    System.out.println("Hey guys, teleop has been initiated");
   }
 
   /**

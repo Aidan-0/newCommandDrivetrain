@@ -30,10 +30,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final VisionBrain m_visionBrain = new VisionBrain();
-  //private final Drivetrain driveTrain = new Drivetrain(Constants.fLId, Constants.fRId, Constants.bLId, Constants.bRId);
+  private final Drivetrain driveTrain = new Drivetrain(Constants.fLId, Constants.fRId, Constants.bLId, Constants.bRId);
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  //private final Driving driving = new Driving(driveTrain);
+  private final UpdateVision visionUpdater = new UpdateVision(m_visionBrain);
+  private final Driving driving = new Driving(driveTrain);
 
   public static Joystick leftDriver = new Joystick(0);
   public static Joystick rightDriver = new Joystick(1);
@@ -44,8 +45,9 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    //driveTrain.setDefaultCommand(driving);
-    m_visionBrain.setDefaultCommand(new UpdateVision(m_visionBrain));
+    driveTrain.setDefaultCommand(driving);
+    System.out.println("Testting");
+    m_visionBrain.setDefaultCommand(visionUpdater);
     configureButtonBindings();
   }
 
@@ -78,9 +80,7 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
-  /*
   public Command getDriving(){
     return driving;
   }
-  */
 }

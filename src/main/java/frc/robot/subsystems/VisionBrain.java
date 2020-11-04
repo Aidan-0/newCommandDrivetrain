@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionBrain extends SubsystemBase{
     public NetworkTableEntry testEntry;
@@ -26,7 +27,7 @@ public class VisionBrain extends SubsystemBase{
     }
 
     public void PublishNetworkTable() {
-        testEntry.setDouble(100);
-        System.out.println("Hi m");
+        SmartDashboard.putNumber("Test value", SmartDashboard.getNumber("Test value", 0) + 1);
+        testEntry.setDouble(SmartDashboard.getNumber("Test value", 0));
     }
 }

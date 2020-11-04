@@ -38,7 +38,7 @@ public class Drivetrain extends SubsystemBase {
   double slowZone;
 
   public Drivetrain(int fLId, int fRId, int bLId, int bRId) {
-
+    /*
     fL = new CANSparkMax(fLId, MotorType.kBrushless);
     fR = new CANSparkMax(fRId, MotorType.kBrushless);
     bL = new CANSparkMax(bLId, MotorType.kBrushless);
@@ -56,10 +56,11 @@ public class Drivetrain extends SubsystemBase {
 
     deadZone = 0.1;
     slowZone = 0.6;
-
+    */
   }
 
   public void Driving(Joystick leftDriver, Joystick rightDriver) {
+    /*
     // drive.arcadeDrive(leftDriver.getY(), rightDriver.getX(), true);
     double modifier = 0.5;
 
@@ -75,11 +76,13 @@ public class Drivetrain extends SubsystemBase {
     else {
       leftMotors.set(0);
     }
+    */
+    System.out.println("eiuiejijwnkajndksjnfksdjnbfpiabux");
 
   }
 
   public void vision() {
-    drive.arcadeDrive(0.3, 0.3);
+    //drive.arcadeDrive(0.3, 0.3);
   }
 
   @Override
